@@ -13,6 +13,10 @@ import com.alexguedes.iam.identity.domain.User;
 import com.alexguedes.iam.identity.domain.UserId;
 import com.alexguedes.iam.identity.domain.UserRepository;
 import com.alexguedes.iam.identity.domain.UserStatus;
+import com.alexguedes.iam.identity.domain.exception.InvalidEmailException;
+import com.alexguedes.iam.identity.domain.exception.InvalidPasswordException;
+import com.alexguedes.iam.identity.domain.exception.InvalidUserNameException;
+import com.alexguedes.iam.identity.domain.exception.UserAlreadyExistsException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -58,7 +62,7 @@ class RegisterUserUseCaseTest {
         RegisterUserUseCase useCase = new RegisterUserUseCase(userRepository, passwordHasher);
         RegisterUserCommand command = new RegisterUserCommand(VALID_NAME, VALID_EMAIL, VALID_PASSWORD);
 
-        assertThrows(IllegalStateException.class, () -> useCase.execute(command));
+        assertThrows(UserAlreadyExistsException.class, () -> useCase.execute(command));
 
         assertFalse(passwordHasher.wasCalled);
         assertFalse(userRepository.wasSaved);
@@ -68,21 +72,21 @@ class RegisterUserUseCaseTest {
     @NullAndEmptySource
     @ValueSource(strings = {"   "})
     void shouldRejectInvalidName(String name) {
-        assertThrows(IllegalArgumentException.class, () -> new RegisterUserCommand(name, VALID_EMAIL, VALID_PASSWORD));
+        assertThrows(InvalidUserNameException.class, () -> new RegisterUserCommand(name, VALID_EMAIL, VALID_PASSWORD));
     }
 
     @ParameterizedTest
     @NullAndEmptySource
     @ValueSource(strings = {"   "})
     void shouldRejectInvalidEmail(String email) {
-        assertThrows(IllegalArgumentException.class, () -> new RegisterUserCommand(VALID_NAME, email, VALID_PASSWORD));
+        assertThrows(InvalidEmailException.class, () -> new RegisterUserCommand(VALID_NAME, email, VALID_PASSWORD));
     }
 
     @ParameterizedTest
     @NullAndEmptySource
     @ValueSource(strings = {"   "})
     void shouldRejectInvalidPassword(String password) {
-        assertThrows(IllegalArgumentException.class, () -> new RegisterUserCommand(VALID_NAME, VALID_EMAIL, password));
+        assertThrows(InvalidPasswordException.class, () -> new RegisterUserCommand(VALID_NAME, VALID_EMAIL, password));
     }
 
     private static final class FakeUserRepository implements UserRepository {

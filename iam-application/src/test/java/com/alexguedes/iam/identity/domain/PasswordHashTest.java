@@ -3,6 +3,7 @@ package com.alexguedes.iam.identity.domain;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.alexguedes.iam.identity.domain.exception.InvalidPasswordException;
 import org.junit.jupiter.api.Test;
 
 class PasswordHashTest {
@@ -18,11 +19,11 @@ class PasswordHashTest {
 
     @Test
     void shouldRejectNullHash() {
-        assertThrows(IllegalArgumentException.class, () -> new PasswordHash(null));
+        assertThrows(InvalidPasswordException.class, () -> new PasswordHash(null));
     }
 
     @Test
     void shouldRejectBlankHash() {
-        assertThrows(IllegalArgumentException.class, () -> new PasswordHash("   "));
+        assertThrows(InvalidPasswordException.class, () -> new PasswordHash("   "));
     }
 }

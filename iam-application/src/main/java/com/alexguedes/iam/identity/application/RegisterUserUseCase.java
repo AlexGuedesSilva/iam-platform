@@ -6,6 +6,7 @@ import com.alexguedes.iam.identity.domain.PasswordHasher;
 import com.alexguedes.iam.identity.domain.User;
 import com.alexguedes.iam.identity.domain.UserId;
 import com.alexguedes.iam.identity.domain.UserRepository;
+import com.alexguedes.iam.identity.domain.exception.UserAlreadyExistsException;
 
 public class RegisterUserUseCase {
 
@@ -30,7 +31,7 @@ public class RegisterUserUseCase {
 
         Email email = new Email(command.email());
         if (userRepository.existsByEmail(email)) {
-            throw new IllegalStateException("Email is already registered");
+            throw new UserAlreadyExistsException("Email is already registered");
         }
 
         PasswordHash passwordHash = passwordHasher.hash(command.password());

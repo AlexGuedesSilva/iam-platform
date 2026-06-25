@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.alexguedes.iam.identity.domain.exception.InvalidEmailException;
+import com.alexguedes.iam.identity.domain.exception.InvalidPasswordException;
+import com.alexguedes.iam.identity.domain.exception.InvalidUserNameException;
 import org.junit.jupiter.api.Test;
 
 class UserTest {
@@ -61,17 +64,17 @@ class UserTest {
 
     @Test
     void shouldNotAllowInvalidName() {
-        assertThrows(IllegalArgumentException.class, () -> new User(UserId.newId(), " ", new Email("user@example.com"), VALID_PASSWORD_HASH));
+        assertThrows(InvalidUserNameException.class, () -> new User(UserId.newId(), " ", new Email("user@example.com"), VALID_PASSWORD_HASH));
     }
 
     @Test
     void shouldNotAllowNullEmail() {
-        assertThrows(IllegalArgumentException.class, () -> new User(UserId.newId(), VALID_NAME, null, VALID_PASSWORD_HASH));
+        assertThrows(InvalidEmailException.class, () -> new User(UserId.newId(), VALID_NAME, null, VALID_PASSWORD_HASH));
     }
 
     @Test
     void shouldNotAllowNullPasswordHash() {
-        assertThrows(IllegalArgumentException.class, () -> new User(UserId.newId(), VALID_NAME, new Email("user@example.com"), null));
+        assertThrows(InvalidPasswordException.class, () -> new User(UserId.newId(), VALID_NAME, new Email("user@example.com"), null));
     }
 
     private static User newUser() {

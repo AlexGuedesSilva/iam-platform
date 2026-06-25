@@ -1,5 +1,10 @@
 package com.alexguedes.iam.identity.domain;
 
+import com.alexguedes.iam.identity.domain.exception.InvalidEmailException;
+import com.alexguedes.iam.identity.domain.exception.InvalidPasswordException;
+import com.alexguedes.iam.identity.domain.exception.InvalidUserNameException;
+import com.alexguedes.iam.identity.domain.exception.UserAlreadyActiveException;
+import com.alexguedes.iam.identity.domain.exception.UserAlreadyDisabledException;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -23,8 +28,8 @@ public class User {
     public User(UserId id, String name, Email email, PasswordHash passwordHash, UserStatus status, Instant createdAt, Instant updatedAt) {
         this.id = requireNonNull(id, "User id must not be null");
         this.name = validateName(name);
-        this.email = requireNonNull(email, "Email must not be null");
-        this.passwordHash = requireNonNull(passwordHash, "Password hash must not be null");
+        this.email = requireEmail(email);
+        this.passwordHash = requirePasswordHash(passwordHash);
         this.status = requireNonNull(status, "User status must not be null");
         this.createdAt = requireNonNull(createdAt, "Created at must not be null");
         this.updatedAt = requireNonNull(updatedAt, "Updated at must not be null");
@@ -76,7 +81,7 @@ public class User {
     }
 
     public void changeEmail(Email newEmail) {
-        Email validEmail = requireNonNull(newEmail, "Email must not be null");
+        Email validEmail = requireEmail(newEmail);
         if (email.equals(validEmail)) {
             return;
         }
@@ -85,7 +90,7 @@ public class User {
     }
 
     public void changePasswordHash(PasswordHash newPasswordHash) {
-        PasswordHash validPasswordHash = requireNonNull(newPasswordHash, "Password hash must not be null");
+        PasswordHash validPasswordHash = requirePasswordHash(newPasswordHash);
         if (passwordHash.equals(validPasswordHash)) {
             return;
         }
@@ -95,7 +100,7 @@ public class User {
 
     public void activate() {
         if (status == UserStatus.ACTIVE) {
-            return;
+            throw new UserAlreadyActiveException();
         }
         status = UserStatus.ACTIVE;
         markUpdated();
@@ -103,7 +108,7 @@ public class User {
 
     public void deactivate() {
         if (status == UserStatus.INACTIVE) {
-            return;
+            throw new UserAlreadyDisabledException();
         }
         status = UserStatus.INACTIVE;
         markUpdated();
@@ -123,15 +128,29 @@ public class User {
 
     private static String validateName(String value) {
         if (value == null || value.isBlank()) {
-            throw new IllegalArgumentException("User name must not be blank");
+            throw new InvalidUserNameException("User name must not be blank");
         }
 
         String normalized = value.trim();
         if (normalized.length() < MIN_NAME_LENGTH || normalized.length() > MAX_NAME_LENGTH) {
-            throw new IllegalArgumentException("User name must be between " + MIN_NAME_LENGTH + " and " + MAX_NAME_LENGTH + " characters");
+            throw new InvalidUserNameException("User name must be between " + MIN_NAME_LENGTH + " and " + MAX_NAME_LENGTH + " characters");
         }
 
         return normalized;
+    }
+
+    private static Email requireEmail(Email value) {
+        if (value == null) {
+            throw new InvalidEmailException("Email must not be null");
+        }
+        return value;
+    }
+
+    private static PasswordHash requirePasswordHash(PasswordHash value) {
+        if (value == null) {
+            throw new InvalidPasswordException("Password hash must not be null");
+        }
+        return value;
     }
 
     private static <T> T requireNonNull(T value, String message) {

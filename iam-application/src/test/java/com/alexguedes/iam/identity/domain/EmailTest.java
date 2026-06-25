@@ -3,6 +3,7 @@ package com.alexguedes.iam.identity.domain;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.alexguedes.iam.identity.domain.exception.InvalidEmailException;
 import org.junit.jupiter.api.Test;
 
 class EmailTest {
@@ -23,16 +24,16 @@ class EmailTest {
 
     @Test
     void shouldRejectNullEmail() {
-        assertThrows(IllegalArgumentException.class, () -> new Email(null));
+        assertThrows(InvalidEmailException.class, () -> new Email(null));
     }
 
     @Test
     void shouldRejectBlankEmail() {
-        assertThrows(IllegalArgumentException.class, () -> new Email("   "));
+        assertThrows(InvalidEmailException.class, () -> new Email("   "));
     }
 
     @Test
     void shouldRejectInvalidEmailFormat() {
-        assertThrows(IllegalArgumentException.class, () -> new Email("invalid-email"));
+        assertThrows(InvalidEmailException.class, () -> new Email("invalid-email"));
     }
 }

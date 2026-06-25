@@ -32,6 +32,21 @@ Domain-Driven Design provides the modeling discipline: the platform should be or
 
 No implementation details are defined yet. These principles describe the intended shape of the system as the platform evolves.
 
+## 🚀 IAM Platform
+
+Building an Identity and Access Management Platform
+using Java, Spring Boot, DDD and Clean Architecture.
+
+Status:
+✅ Identity Domain
+🟡 Authentication (In Progress)
+⚪ Authorization
+⚪ Sessions
+⚪ API Keys
+⚪ Audit
+⚪ OAuth2 / OIDC
+
+
 ## Main Modules
 
 - `iam-application`: main IAM application module and primary place for identity and access management capabilities.

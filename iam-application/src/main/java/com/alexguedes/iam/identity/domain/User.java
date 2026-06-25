@@ -5,19 +5,24 @@ import java.util.Objects;
 
 public class User {
 
+    private static final int MIN_NAME_LENGTH = 2;
+    private static final int MAX_NAME_LENGTH = 120;
+
     private final UserId id;
+    private String name;
     private Email email;
     private PasswordHash passwordHash;
     private UserStatus status;
     private final Instant createdAt;
     private Instant updatedAt;
 
-    public User(UserId id, Email email, PasswordHash passwordHash) {
-        this(id, email, passwordHash, UserStatus.ACTIVE, Instant.now(), Instant.now());
+    public User(UserId id, String name, Email email, PasswordHash passwordHash) {
+        this(id, name, email, passwordHash, UserStatus.ACTIVE, Instant.now(), Instant.now());
     }
 
-    public User(UserId id, Email email, PasswordHash passwordHash, UserStatus status, Instant createdAt, Instant updatedAt) {
+    public User(UserId id, String name, Email email, PasswordHash passwordHash, UserStatus status, Instant createdAt, Instant updatedAt) {
         this.id = requireNonNull(id, "User id must not be null");
+        this.name = validateName(name);
         this.email = requireNonNull(email, "Email must not be null");
         this.passwordHash = requireNonNull(passwordHash, "Password hash must not be null");
         this.status = requireNonNull(status, "User status must not be null");
@@ -31,6 +36,10 @@ public class User {
 
     public UserId id() {
         return id;
+    }
+
+    public String name() {
+        return name;
     }
 
     public Email email() {
@@ -55,6 +64,15 @@ public class User {
 
     public boolean isActive() {
         return status == UserStatus.ACTIVE;
+    }
+
+    public void rename(String newName) {
+        String validName = validateName(newName);
+        if (name.equals(validName)) {
+            return;
+        }
+        name = validName;
+        markUpdated();
     }
 
     public void changeEmail(Email newEmail) {
@@ -101,6 +119,19 @@ public class User {
 
     private void markUpdated() {
         updatedAt = Instant.now();
+    }
+
+    private static String validateName(String value) {
+        if (value == null || value.isBlank()) {
+            throw new IllegalArgumentException("User name must not be blank");
+        }
+
+        String normalized = value.trim();
+        if (normalized.length() < MIN_NAME_LENGTH || normalized.length() > MAX_NAME_LENGTH) {
+            throw new IllegalArgumentException("User name must be between " + MIN_NAME_LENGTH + " and " + MAX_NAME_LENGTH + " characters");
+        }
+
+        return normalized;
     }
 
     private static <T> T requireNonNull(T value, String message) {

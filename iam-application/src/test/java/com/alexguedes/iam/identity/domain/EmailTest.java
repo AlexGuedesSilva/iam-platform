@@ -17,23 +17,29 @@ class EmailTest {
 
     @Test
     void shouldNormalizeEmailToLowercase() {
-        Email email = new Email("USER@EXAMPLE.COM");
+        Email email = new Email("  USER@EXAMPLE.COM  ");
 
         assertEquals("user@example.com", email.value());
     }
 
     @Test
     void shouldRejectNullEmail() {
-        assertThrows(InvalidEmailException.class, () -> new Email(null));
+        InvalidEmailException exception = assertThrows(InvalidEmailException.class, () -> new Email(null));
+
+        assertEquals("Email must not be blank", exception.getMessage());
     }
 
     @Test
     void shouldRejectBlankEmail() {
-        assertThrows(InvalidEmailException.class, () -> new Email("   "));
+        InvalidEmailException exception = assertThrows(InvalidEmailException.class, () -> new Email("   "));
+
+        assertEquals("Email must not be blank", exception.getMessage());
     }
 
     @Test
     void shouldRejectInvalidEmailFormat() {
-        assertThrows(InvalidEmailException.class, () -> new Email("invalid-email"));
+        InvalidEmailException exception = assertThrows(InvalidEmailException.class, () -> new Email("invalid-email"));
+
+        assertEquals("Email format is invalid", exception.getMessage());
     }
 }

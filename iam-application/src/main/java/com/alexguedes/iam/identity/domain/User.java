@@ -11,7 +11,7 @@ import java.util.Objects;
 public class User {
 
     private static final int MIN_NAME_LENGTH = 2;
-    private static final int MAX_NAME_LENGTH = 120;
+    private static final int MAX_NAME_LENGTH = 100;
 
     private final UserId id;
     private String name;

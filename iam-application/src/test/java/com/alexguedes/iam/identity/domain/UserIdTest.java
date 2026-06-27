@@ -1,12 +1,10 @@
 package com.alexguedes.iam.identity.domain;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 class UserIdTest {
 
@@ -21,13 +19,67 @@ class UserIdTest {
 
     @Test
     void shouldCreateNewUserId() {
-        UserId userId = UserId.newId();
+        UserId id = UserId.newId();
 
-        assertNotNull(userId.value());
+        assertNotNull(id);
+        assertNotNull(id.value());
     }
 
     @Test
     void shouldRejectNullId() {
-        assertThrows(IllegalArgumentException.class, () -> new UserId(null));
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> new UserId(null)
+        );
+
+        assertEquals("User id must not be null", exception.getMessage());
+    }
+
+    @Test
+    void shouldRejectEmptyString() {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> UserId.fromString("")
+        );
+
+        assertEquals("User id must not be blank", exception.getMessage());
+    }
+
+    @Test
+    void shouldRejectBlankString() {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> UserId.fromString(" ")
+        );
+
+        assertEquals("User id must not be blank", exception.getMessage());
+    }
+
+    @Test
+    void shouldRejectNullString() {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> UserId.fromString(null)
+        );
+
+        assertEquals("User id must not be blank", exception.getMessage());
+    }
+
+    @Test
+    void shouldCreateUserIdFromValidString() {
+        UUID value = UUID.randomUUID();
+        String stringValue = value.toString();
+
+        UserId userId = UserId.fromString(stringValue);
+
+        assertEquals(value, userId.value());
+    }
+
+    @Test
+    void shouldRejectInvalidUuidString() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> UserId.fromString("invalid-uuid")
+        );
     }
 }

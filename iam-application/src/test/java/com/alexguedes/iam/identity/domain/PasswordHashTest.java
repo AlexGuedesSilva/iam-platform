@@ -19,11 +19,27 @@ class PasswordHashTest {
 
     @Test
     void shouldRejectNullHash() {
-        assertThrows(InvalidPasswordException.class, () -> new PasswordHash(null));
+        InvalidPasswordException exception = assertThrows(InvalidPasswordException.class, () ->
+                new PasswordHash(null));
+
+        assertEquals("Password hash must not be blank", exception.getMessage());
     }
 
     @Test
     void shouldRejectBlankHash() {
-        assertThrows(InvalidPasswordException.class, () -> new PasswordHash("   "));
+        InvalidPasswordException exception = assertThrows(InvalidPasswordException.class, () ->
+                new PasswordHash("  "));
+
+        assertEquals("Password hash must not be blank", exception.getMessage());
+    }
+
+    @Test
+    void shouldRejectPasswordHashShorterThanMinimumLength() {
+        String shortHash = "1234567890123456789012345678901"; // 31 caracteres
+
+        InvalidPasswordException exception = assertThrows(InvalidPasswordException.class, () ->
+                new PasswordHash(shortHash));
+
+        assertEquals("Password hash must have at least " + 32 + " characters", exception.getMessage());
     }
 }

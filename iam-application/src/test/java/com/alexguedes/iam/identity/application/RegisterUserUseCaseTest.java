@@ -11,6 +11,7 @@ import com.alexguedes.iam.identity.domain.PasswordHash;
 import com.alexguedes.iam.identity.domain.PasswordHasher;
 import com.alexguedes.iam.identity.domain.User;
 import com.alexguedes.iam.identity.domain.UserId;
+import com.alexguedes.iam.identity.domain.UserIdGenerator;
 import com.alexguedes.iam.identity.domain.UserRepository;
 import com.alexguedes.iam.identity.domain.UserStatus;
 import com.alexguedes.iam.identity.domain.exception.InvalidEmailException;
@@ -20,6 +21,7 @@ import com.alexguedes.iam.identity.domain.exception.UserAlreadyExistsException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
@@ -31,20 +33,24 @@ class RegisterUserUseCaseTest {
     private static final String VALID_EMAIL = "alex@example.com";
     private static final String VALID_PASSWORD = "raw-password";
     private static final String HASHED_PASSWORD = "12345678901234567890123456789012";
+    private static final UserId GENERATED_USER_ID = new UserId(UUID.fromString("85d2a3fe-a82f-45de-ac1a-05d71147e8fd"));
 
     @Test
     void shouldRegisterNewUserSuccessfully() {
         FakeUserRepository userRepository = new FakeUserRepository();
         FakePasswordHasher passwordHasher = new FakePasswordHasher();
-        RegisterUserUseCase useCase = new RegisterUserUseCase(userRepository, passwordHasher);
+        FakeUserIdGenerator userIdGenerator = new FakeUserIdGenerator(GENERATED_USER_ID);
+        RegisterUserUseCase useCase = new RegisterUserUseCase(userRepository, passwordHasher, userIdGenerator);
         RegisterUserCommand command = new RegisterUserCommand(VALID_NAME, VALID_EMAIL, VALID_PASSWORD);
 
         RegisterUserResult result = useCase.execute(command);
 
+        assertTrue(userIdGenerator.wasCalled);
         assertTrue(passwordHasher.wasCalled);
         assertEquals(VALID_PASSWORD, passwordHasher.rawPassword);
         assertTrue(userRepository.wasSaved);
         assertNotNull(userRepository.savedUser);
+        assertEquals(GENERATED_USER_ID, userRepository.savedUser.id());
         assertEquals(UserStatus.ACTIVE, userRepository.savedUser.status());
         assertEquals(new Email(VALID_EMAIL), userRepository.savedUser.email());
         assertEquals(new PasswordHash(HASHED_PASSWORD), userRepository.savedUser.passwordHash());
@@ -59,11 +65,13 @@ class RegisterUserUseCaseTest {
         FakeUserRepository userRepository = new FakeUserRepository();
         userRepository.alreadyRegisteredEmail = new Email(VALID_EMAIL);
         FakePasswordHasher passwordHasher = new FakePasswordHasher();
-        RegisterUserUseCase useCase = new RegisterUserUseCase(userRepository, passwordHasher);
+        FakeUserIdGenerator userIdGenerator = new FakeUserIdGenerator(GENERATED_USER_ID);
+        RegisterUserUseCase useCase = new RegisterUserUseCase(userRepository, passwordHasher, userIdGenerator);
         RegisterUserCommand command = new RegisterUserCommand(VALID_NAME, VALID_EMAIL, VALID_PASSWORD);
 
         assertThrows(UserAlreadyExistsException.class, () -> useCase.execute(command));
 
+        assertFalse(userIdGenerator.wasCalled);
         assertFalse(passwordHasher.wasCalled);
         assertFalse(userRepository.wasSaved);
     }
@@ -112,7 +120,7 @@ class RegisterUserUseCaseTest {
         @Override
         public Optional<User> findByEmail(Email email) {
             if (alreadyRegisteredEmail != null && alreadyRegisteredEmail.equals(email)) {
-                return Optional.of(new User(UserId.newId(), "Registered User", email, new PasswordHash(HASHED_PASSWORD)));
+                return Optional.of(new User(GENERATED_USER_ID, "Registered User", email, new PasswordHash(HASHED_PASSWORD)));
             }
             return Optional.empty();
         }
@@ -133,6 +141,22 @@ class RegisterUserUseCaseTest {
             wasCalled = true;
             this.rawPassword = rawPassword;
             return new PasswordHash(HASHED_PASSWORD);
+        }
+    }
+
+    private static final class FakeUserIdGenerator implements UserIdGenerator {
+
+        private final UserId userId;
+        private boolean wasCalled;
+
+        private FakeUserIdGenerator(UserId userId) {
+            this.userId = userId;
+        }
+
+        @Override
+        public UserId generate() {
+            wasCalled = true;
+            return userId;
         }
     }
 }

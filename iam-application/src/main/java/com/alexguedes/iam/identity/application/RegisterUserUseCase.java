@@ -5,6 +5,7 @@ import com.alexguedes.iam.identity.domain.PasswordHash;
 import com.alexguedes.iam.identity.domain.PasswordHasher;
 import com.alexguedes.iam.identity.domain.User;
 import com.alexguedes.iam.identity.domain.UserId;
+import com.alexguedes.iam.identity.domain.UserIdGenerator;
 import com.alexguedes.iam.identity.domain.UserRepository;
 import com.alexguedes.iam.identity.domain.exception.UserAlreadyExistsException;
 
@@ -14,8 +15,9 @@ public class RegisterUserUseCase {
 
     private final UserRepository userRepository;
     private final PasswordHasher passwordHasher;
+    private final UserIdGenerator userIdGenerator;
 
-    public RegisterUserUseCase(UserRepository userRepository, PasswordHasher passwordHasher) {
+    public RegisterUserUseCase(UserRepository userRepository, PasswordHasher passwordHasher, UserIdGenerator userIdGenerator) {
         this.userRepository = Objects.requireNonNull(
                 userRepository,
                 "User repository must not be null"
@@ -24,6 +26,11 @@ public class RegisterUserUseCase {
         this.passwordHasher = Objects.requireNonNull(
                 passwordHasher,
                 "Password hasher must not be null"
+        );
+
+        this.userIdGenerator = Objects.requireNonNull(
+                userIdGenerator,
+                "User id generator must not be null"
         );
     }
 
@@ -38,7 +45,8 @@ public class RegisterUserUseCase {
         }
 
         PasswordHash passwordHash = passwordHasher.hash(command.password());
-        User user = new User(UserId.newId(), command.name(), email, passwordHash);
+        UserId userId = userIdGenerator.generate();
+        User user = new User(userId, command.name(), email, passwordHash);
         User savedUser = userRepository.save(user);
 
         return new RegisterUserResult(savedUser.id(), savedUser.name(), savedUser.email(), savedUser.status());

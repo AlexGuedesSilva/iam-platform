@@ -18,14 +18,6 @@ class UserIdTest {
     }
 
     @Test
-    void shouldCreateNewUserId() {
-        UserId id = UserId.newId();
-
-        assertNotNull(id);
-        assertNotNull(id.value());
-    }
-
-    @Test
     void shouldRejectNullId() {
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,

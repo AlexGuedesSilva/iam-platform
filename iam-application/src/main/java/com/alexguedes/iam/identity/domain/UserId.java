@@ -10,10 +10,6 @@ public record UserId(UUID value) {
         }
     }
 
-    public static UserId newId() {
-        return new UserId(UUID.randomUUID());
-    }
-
     public static UserId fromString(String value) {
         if (value == null || value.isBlank()) {
             throw new IllegalArgumentException("User id must not be blank");

@@ -13,7 +13,7 @@ class UserTest {
 
     private static final String VALID_NAME = "Alex Guedes";
     private static final Email VALID_EMAIL = new Email("alex@email.com");
-    private static final UserId VALID_USER_ID = UserId.fromString(UUID.randomUUID().toString());
+    private static final UserId VALID_USER_ID = newUserId();
     private static final PasswordHash VALID_PASSWORD_HASH = new PasswordHash("12345678901234567890123456789012");
 
     @Test
@@ -27,7 +27,7 @@ class UserTest {
 
     @Test
     void shouldCreateUserWithAuditFields() {
-        UserId id = UserId.newId();
+        UserId id = newUserId();
         Email email = new Email("alex@email.com");
         PasswordHash passwordHash = new PasswordHash("12345678901234567890123456789012");
         Instant createdAt = Instant.parse("2026-01-01T10:00:00Z");
@@ -56,7 +56,7 @@ class UserTest {
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
                 () -> new User(
-                        UserId.newId(),
+                        newUserId(),
                         VALID_NAME,
                         VALID_EMAIL,
                         VALID_PASSWORD_HASH,
@@ -75,7 +75,7 @@ class UserTest {
         Instant updatedAt = Instant.parse("2026-01-01T10:00:00Z");
 
         User user = new User(
-                UserId.newId(),
+                newUserId(),
                 VALID_NAME,
                 VALID_EMAIL,
                 VALID_PASSWORD_HASH,
@@ -171,18 +171,18 @@ class UserTest {
     @Test
     void shouldNotAllowInvalidName() {
 
-        assertThrows(InvalidUserNameException.class, () -> new User(UserId.newId(), " ", new Email("user@example.com"), VALID_PASSWORD_HASH));
-        assertThrows(InvalidUserNameException.class, () -> new User(UserId.newId(), null, new Email("user@example.com"), VALID_PASSWORD_HASH));
+        assertThrows(InvalidUserNameException.class, () -> new User(newUserId(), " ", new Email("user@example.com"), VALID_PASSWORD_HASH));
+        assertThrows(InvalidUserNameException.class, () -> new User(newUserId(), null, new Email("user@example.com"), VALID_PASSWORD_HASH));
     }
 
     @Test
     void shouldNotAllowNullEmail() {
-        assertThrows(InvalidEmailException.class, () -> new User(UserId.newId(), VALID_NAME, null, VALID_PASSWORD_HASH));
+        assertThrows(InvalidEmailException.class, () -> new User(newUserId(), VALID_NAME, null, VALID_PASSWORD_HASH));
     }
 
     @Test
     void shouldNotAllowNullPasswordHash() {
-        assertThrows(InvalidPasswordException.class, () -> new User(UserId.newId(), VALID_NAME, new Email("user@example.com"), null));
+        assertThrows(InvalidPasswordException.class, () -> new User(newUserId(), VALID_NAME, new Email("user@example.com"), null));
     }
 
     @Test
@@ -207,7 +207,7 @@ class UserTest {
 
     @Test
     void shouldBeEqualWhenUsersHaveSameId() {
-        UserId sameId = UserId.newId();
+        UserId sameId = newUserId();
 
         User user1 = new User(
                 sameId,
@@ -229,14 +229,14 @@ class UserTest {
     @Test
     void shouldNotBeEqualWhenUsersHaveDifferentIds() {
         User user1 = new User(
-                UserId.newId(),
+                newUserId(),
                 "Alex Guedes",
                 new Email("alex@email.com"),
                 new PasswordHash("12345678901234567890123456789012")
         );
 
         User user2 = new User(
-                UserId.newId(),
+                newUserId(),
                 "Alex Guedes",
                 new Email("alex@email.com"),
                 new PasswordHash("12345678901234567890123456789012")
@@ -254,7 +254,7 @@ class UserTest {
 
     @Test
     void shouldHaveSameHashCodeWhenUsersHaveSameId() {
-        UserId sameId = UserId.newId();
+        UserId sameId = newUserId();
 
         User user1 = new User(
                 sameId,
@@ -278,7 +278,7 @@ class UserTest {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> new User(
-                        UserId.newId(),
+                        newUserId(),
                         VALID_NAME,
                         VALID_EMAIL,
                         VALID_PASSWORD_HASH,
@@ -294,7 +294,7 @@ class UserTest {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> new User(
-                        UserId.newId(),
+                        newUserId(),
                         VALID_NAME,
                         VALID_EMAIL,
                         VALID_PASSWORD_HASH,
@@ -310,7 +310,7 @@ class UserTest {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> new User(
-                        UserId.newId(),
+                        newUserId(),
                         VALID_NAME,
                         VALID_EMAIL,
                         VALID_PASSWORD_HASH,
@@ -327,7 +327,7 @@ class UserTest {
         Instant updatedAt = Instant.parse("2026-01-01T10:00:00Z");
 
         User user = new User(
-                UserId.newId(),
+                newUserId(),
                 VALID_NAME,
                 VALID_EMAIL,
                 VALID_PASSWORD_HASH,
@@ -348,7 +348,7 @@ class UserTest {
         Instant updatedAt = Instant.parse("2026-01-01T10:00:00Z");
 
         User user = new User(
-                UserId.newId(),
+                newUserId(),
                 VALID_NAME,
                 VALID_EMAIL,
                 VALID_PASSWORD_HASH,
@@ -369,7 +369,7 @@ class UserTest {
         Instant updatedAt = Instant.parse("2026-01-01T10:00:00Z");
 
         User user = new User(
-                UserId.newId(),
+                newUserId(),
                 VALID_NAME,
                 VALID_EMAIL,
                 VALID_PASSWORD_HASH,
@@ -390,7 +390,7 @@ class UserTest {
         Instant updatedAt = Instant.parse("2026-01-01T10:00:00Z");
 
         User user = new User(
-                UserId.newId(),
+                newUserId(),
                 VALID_NAME,
                 VALID_EMAIL,
                 VALID_PASSWORD_HASH,
@@ -407,5 +407,9 @@ class UserTest {
 
     private static User newUser() {
         return new User(VALID_USER_ID, VALID_NAME, VALID_EMAIL, VALID_PASSWORD_HASH);
+    }
+
+    private static UserId newUserId() {
+        return new UserId(UUID.randomUUID());
     }
 }

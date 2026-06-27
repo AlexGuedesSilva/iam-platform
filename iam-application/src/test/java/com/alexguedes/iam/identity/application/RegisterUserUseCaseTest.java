@@ -76,6 +76,17 @@ class RegisterUserUseCaseTest {
         assertFalse(userRepository.wasSaved);
     }
 
+    @Test
+    void shouldRejectNullCommand() {
+        FakeUserRepository userRepository = new FakeUserRepository();
+        userRepository.alreadyRegisteredEmail = new Email(VALID_EMAIL);
+        FakePasswordHasher passwordHasher = new FakePasswordHasher();
+        FakeUserIdGenerator userIdGenerator = new FakeUserIdGenerator(GENERATED_USER_ID);
+        RegisterUserUseCase useCase = new RegisterUserUseCase(userRepository, passwordHasher, userIdGenerator);
+        assertThrows(IllegalArgumentException.class, () -> useCase.execute(null));
+
+    }
+
     @ParameterizedTest
     @NullAndEmptySource
     @ValueSource(strings = {"   "})

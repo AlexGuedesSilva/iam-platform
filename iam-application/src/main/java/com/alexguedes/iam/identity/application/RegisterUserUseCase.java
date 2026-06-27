@@ -8,20 +8,23 @@ import com.alexguedes.iam.identity.domain.UserId;
 import com.alexguedes.iam.identity.domain.UserRepository;
 import com.alexguedes.iam.identity.domain.exception.UserAlreadyExistsException;
 
+import java.util.Objects;
+
 public class RegisterUserUseCase {
 
     private final UserRepository userRepository;
     private final PasswordHasher passwordHasher;
 
     public RegisterUserUseCase(UserRepository userRepository, PasswordHasher passwordHasher) {
-        if (userRepository == null) {
-            throw new IllegalArgumentException("User repository must not be null");
-        }
-        if (passwordHasher == null) {
-            throw new IllegalArgumentException("Password hasher must not be null");
-        }
-        this.userRepository = userRepository;
-        this.passwordHasher = passwordHasher;
+        this.userRepository = Objects.requireNonNull(
+                userRepository,
+                "User repository must not be null"
+        );
+
+        this.passwordHasher = Objects.requireNonNull(
+                passwordHasher,
+                "Password hasher must not be null"
+        );
     }
 
     public RegisterUserResult execute(RegisterUserCommand command) {

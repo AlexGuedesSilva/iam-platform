@@ -1,4 +1,4 @@
-package com.alexguedes.iam.identity.interfaces.rest;
+package com.alexguedes.iam.identity.interfaces.rest.error;
 
 import java.time.Instant;
 

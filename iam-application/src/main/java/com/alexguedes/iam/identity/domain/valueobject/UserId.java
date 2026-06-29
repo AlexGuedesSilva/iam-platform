@@ -1,4 +1,4 @@
-package com.alexguedes.iam.identity.domain;
+package com.alexguedes.iam.identity.domain.valueobject;
 
 import java.util.UUID;
 

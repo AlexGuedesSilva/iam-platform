@@ -1,5 +1,6 @@
 package com.alexguedes.iam.identity.domain;
 
+import com.alexguedes.iam.identity.domain.valueobject.UserId;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;

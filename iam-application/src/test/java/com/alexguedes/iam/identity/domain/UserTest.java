@@ -1,9 +1,13 @@
 package com.alexguedes.iam.identity.domain;
 
 import com.alexguedes.iam.identity.domain.exception.*;
+import com.alexguedes.iam.identity.domain.model.User;
+import com.alexguedes.iam.identity.domain.model.UserStatus;
+import com.alexguedes.iam.identity.domain.valueobject.Email;
+import com.alexguedes.iam.identity.domain.valueobject.PasswordHash;
+import com.alexguedes.iam.identity.domain.valueobject.UserId;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
 

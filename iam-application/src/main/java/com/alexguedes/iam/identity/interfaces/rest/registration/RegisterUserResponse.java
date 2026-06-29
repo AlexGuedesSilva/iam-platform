@@ -1,4 +1,4 @@
-package com.alexguedes.iam.identity.interfaces.rest;
+package com.alexguedes.iam.identity.interfaces.rest.registration;
 
 import com.alexguedes.iam.identity.application.RegisterUserResult;
 import java.time.Instant;

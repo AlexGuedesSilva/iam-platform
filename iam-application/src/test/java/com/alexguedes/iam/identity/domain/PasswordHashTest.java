@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.alexguedes.iam.identity.domain.exception.InvalidPasswordException;
+import com.alexguedes.iam.identity.domain.valueobject.PasswordHash;
 import org.junit.jupiter.api.Test;
 
 class PasswordHashTest {

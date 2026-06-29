@@ -49,6 +49,12 @@ public class RegisterUserUseCase {
         User user = new User(userId, command.name(), email, passwordHash);
         User savedUser = userRepository.save(user);
 
-        return new RegisterUserResult(savedUser.id(), savedUser.name(), savedUser.email(), savedUser.status());
+        return new RegisterUserResult(
+                savedUser.id(),
+                savedUser.name(),
+                savedUser.email(),
+                savedUser.status(),
+                savedUser.createdAt()
+        );
     }
 }

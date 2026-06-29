@@ -58,6 +58,7 @@ class RegisterUserUseCaseTest {
         assertEquals(userRepository.savedUser.id(), result.userId());
         assertEquals(new Email(VALID_EMAIL), result.email());
         assertEquals(UserStatus.ACTIVE, result.status());
+        assertEquals(userRepository.savedUser.createdAt(), result.createdAt());
     }
 
     @Test

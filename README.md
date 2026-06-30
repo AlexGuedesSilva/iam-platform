@@ -53,6 +53,10 @@ Status:
 - `api-gateway`: gateway module responsible for edge-facing concerns and platform entry points.
 - `shared-kernel`: shared foundation for stable cross-module concepts that are intentionally reused.
 
+## API Documentation
+
+- [Identity user registration endpoint](docs/identity/register-user-endpoint.md)
+
 ## Project Layout
 
 ```text

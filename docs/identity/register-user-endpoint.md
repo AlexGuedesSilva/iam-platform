@@ -70,7 +70,7 @@ Error responses use the current `ErrorResponse` structure:
 | --- | --- | --- |
 | `400 Bad Request` | Validation error for invalid `name`, `email`, or `password`. | `Email format is invalid` |
 | `400 Bad Request` | Malformed JSON or empty request body. | `Request body is invalid or malformed` |
-| `409 Conflict` | A user with the requested email already exists. | `User already exists` or `Email is already registered` |
+| `409 Conflict` | A user with the requested email already exists. | `User already exists` |
 | `415 Unsupported Media Type` | Request `Content-Type` is not supported. | `Content type is not supported` |
 
 ### Example Validation Error
@@ -148,7 +148,7 @@ curl -i -X POST "http://localhost:8080/identity/users/register" \
 ```
 
 ### Existing Email Conflict
-
+Run this request after registering the same email once, or use an email that already exists in the system.
 ```bash
 curl -i -X POST "http://localhost:8080/identity/users/register" \
   -H "Content-Type: application/json" \

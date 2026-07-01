@@ -1,10 +1,11 @@
-package com.alexguedes.iam.identity.infrastructure.persistence;
+package com.alexguedes.iam.identity.infrastructure.persistence.user;
 
-import com.alexguedes.iam.identity.domain.Email;
-import com.alexguedes.iam.identity.domain.User;
-import com.alexguedes.iam.identity.domain.UserId;
-import com.alexguedes.iam.identity.domain.UserRepository;
+import com.alexguedes.iam.identity.domain.valueobject.Email;
+import com.alexguedes.iam.identity.domain.model.User;
+import com.alexguedes.iam.identity.domain.valueobject.UserId;
+import com.alexguedes.iam.identity.domain.port.UserRepository;
 import java.util.Optional;
+
 import org.springframework.stereotype.Repository;
 
 @Repository

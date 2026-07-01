@@ -1,6 +1,10 @@
-package com.alexguedes.iam.identity.infrastructure.persistence;
+package com.alexguedes.iam.identity.infrastructure.persistence.user;
 
-import com.alexguedes.iam.identity.domain.*;
+import com.alexguedes.iam.identity.domain.model.User;
+import com.alexguedes.iam.identity.domain.model.UserStatus;
+import com.alexguedes.iam.identity.domain.valueobject.Email;
+import com.alexguedes.iam.identity.domain.valueobject.PasswordHash;
+import com.alexguedes.iam.identity.domain.valueobject.UserId;
 import org.springframework.stereotype.Component;
 
 @Component

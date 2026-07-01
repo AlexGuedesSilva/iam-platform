@@ -3,13 +3,16 @@ package com.alexguedes.iam.identity.infrastructure.persistence;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.alexguedes.iam.identity.domain.Email;
-import com.alexguedes.iam.identity.domain.PasswordHash;
-import com.alexguedes.iam.identity.domain.User;
-import com.alexguedes.iam.identity.domain.UserId;
-import com.alexguedes.iam.identity.domain.UserStatus;
+import com.alexguedes.iam.identity.domain.valueobject.Email;
+import com.alexguedes.iam.identity.domain.valueobject.PasswordHash;
+import com.alexguedes.iam.identity.domain.model.User;
+import com.alexguedes.iam.identity.domain.valueobject.UserId;
+import com.alexguedes.iam.identity.domain.model.UserStatus;
 import java.time.Instant;
 import java.util.UUID;
+
+import com.alexguedes.iam.identity.infrastructure.persistence.user.UserJpaEntity;
+import com.alexguedes.iam.identity.infrastructure.persistence.user.UserPersistenceMapper;
 import org.junit.jupiter.api.Test;
 
 class UserPersistenceMapperTest {

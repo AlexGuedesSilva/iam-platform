@@ -1,5 +1,8 @@
-package com.alexguedes.iam.identity.domain;
+package com.alexguedes.iam.identity.domain.model;
 
+import com.alexguedes.iam.identity.domain.valueobject.Email;
+import com.alexguedes.iam.identity.domain.valueobject.PasswordHash;
+import com.alexguedes.iam.identity.domain.valueobject.UserId;
 import com.alexguedes.iam.identity.domain.exception.InvalidEmailException;
 import com.alexguedes.iam.identity.domain.exception.InvalidPasswordException;
 import com.alexguedes.iam.identity.domain.exception.InvalidUserNameException;

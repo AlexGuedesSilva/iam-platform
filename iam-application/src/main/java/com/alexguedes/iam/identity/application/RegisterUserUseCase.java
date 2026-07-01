@@ -1,12 +1,12 @@
 package com.alexguedes.iam.identity.application;
 
-import com.alexguedes.iam.identity.domain.Email;
-import com.alexguedes.iam.identity.domain.PasswordHash;
-import com.alexguedes.iam.identity.domain.PasswordHasher;
-import com.alexguedes.iam.identity.domain.User;
-import com.alexguedes.iam.identity.domain.UserId;
-import com.alexguedes.iam.identity.domain.UserIdGenerator;
-import com.alexguedes.iam.identity.domain.UserRepository;
+import com.alexguedes.iam.identity.domain.valueobject.Email;
+import com.alexguedes.iam.identity.domain.valueobject.PasswordHash;
+import com.alexguedes.iam.identity.domain.port.PasswordHasher;
+import com.alexguedes.iam.identity.domain.model.User;
+import com.alexguedes.iam.identity.domain.valueobject.UserId;
+import com.alexguedes.iam.identity.domain.port.UserIdGenerator;
+import com.alexguedes.iam.identity.domain.port.UserRepository;
 import com.alexguedes.iam.identity.domain.exception.UserAlreadyExistsException;
 
 import java.util.Objects;
@@ -49,6 +49,12 @@ public class RegisterUserUseCase {
         User user = new User(userId, command.name(), email, passwordHash);
         User savedUser = userRepository.save(user);
 
-        return new RegisterUserResult(savedUser.id(), savedUser.name(), savedUser.email(), savedUser.status());
+        return new RegisterUserResult(
+                savedUser.id(),
+                savedUser.name(),
+                savedUser.email(),
+                savedUser.status(),
+                savedUser.createdAt()
+        );
     }
 }

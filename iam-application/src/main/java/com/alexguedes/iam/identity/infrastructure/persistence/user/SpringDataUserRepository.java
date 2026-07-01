@@ -1,7 +1,8 @@
-package com.alexguedes.iam.identity.infrastructure.persistence;
+package com.alexguedes.iam.identity.infrastructure.persistence.user;
 
 import java.util.Optional;
 import java.util.UUID;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SpringDataUserRepository extends JpaRepository<UserJpaEntity, UUID> {

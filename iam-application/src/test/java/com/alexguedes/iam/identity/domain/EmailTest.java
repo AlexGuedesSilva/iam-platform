@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.alexguedes.iam.identity.domain.exception.InvalidEmailException;
+import com.alexguedes.iam.identity.domain.valueobject.Email;
 import org.junit.jupiter.api.Test;
 
 class EmailTest {

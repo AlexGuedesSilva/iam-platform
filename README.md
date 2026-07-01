@@ -31,6 +31,17 @@ Clean Architecture provides the direction for dependency flow: core business con
 Domain-Driven Design provides the modeling discipline: the platform is organized around the IAM domain language, with clear boundaries, meaningful concepts, and modules that reflect business capabilities rather than technical layers alone.
 
 The current implementation keeps the Identity domain and application layers protected from REST and persistence details. External concerns such as HTTP controllers, exception handling, and database adapters are implemented at the edges of the system.
+
+## Test Coverage
+
+This project uses JaCoCo to generate test coverage reports.
+
+Run:
+
+```bash
+mvn clean verify
+```
+
 ## 🚀 IAM Platform
 
 Building an Identity and Access Management Platform using Java, Spring Boot, DDD and Clean Architecture.

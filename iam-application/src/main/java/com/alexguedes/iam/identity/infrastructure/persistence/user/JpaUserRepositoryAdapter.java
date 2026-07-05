@@ -3,7 +3,7 @@ package com.alexguedes.iam.identity.infrastructure.persistence.user;
 import com.alexguedes.iam.identity.domain.valueobject.Email;
 import com.alexguedes.iam.identity.domain.model.User;
 import com.alexguedes.iam.identity.domain.valueobject.UserId;
-import com.alexguedes.iam.identity.domain.port.UserRepository;
+import com.alexguedes.iam.identity.application.port.out.UserRepository;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;

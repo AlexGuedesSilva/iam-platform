@@ -6,13 +6,16 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.alexguedes.iam.identity.application.usecase.RegisterUserCommand;
+import com.alexguedes.iam.identity.application.usecase.RegisterUserResult;
+import com.alexguedes.iam.identity.application.usecase.RegisterUserUseCase;
 import com.alexguedes.iam.identity.domain.valueobject.Email;
 import com.alexguedes.iam.identity.domain.valueobject.PasswordHash;
-import com.alexguedes.iam.identity.domain.port.PasswordHasher;
+import com.alexguedes.iam.identity.application.port.security.PasswordHasher;
 import com.alexguedes.iam.identity.domain.model.User;
 import com.alexguedes.iam.identity.domain.valueobject.UserId;
-import com.alexguedes.iam.identity.domain.port.UserIdGenerator;
-import com.alexguedes.iam.identity.domain.port.UserRepository;
+import com.alexguedes.iam.identity.application.port.identity.UserIdGenerator;
+import com.alexguedes.iam.identity.application.port.out.UserRepository;
 import com.alexguedes.iam.identity.domain.model.UserStatus;
 import com.alexguedes.iam.identity.domain.exception.InvalidEmailException;
 import com.alexguedes.iam.identity.domain.exception.InvalidPasswordException;
@@ -153,6 +156,11 @@ class RegisterUserUseCaseTest {
             wasCalled = true;
             this.rawPassword = rawPassword;
             return new PasswordHash(HASHED_PASSWORD);
+        }
+
+        @Override
+        public boolean matches(String rawPassword, PasswordHash passwordHash) {
+            return passwordHash.value().equals(HASHED_PASSWORD);
         }
     }
 

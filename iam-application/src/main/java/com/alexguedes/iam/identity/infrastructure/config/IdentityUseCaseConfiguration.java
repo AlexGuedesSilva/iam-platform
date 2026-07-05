@@ -1,9 +1,9 @@
 package com.alexguedes.iam.identity.infrastructure.config;
 
-import com.alexguedes.iam.identity.application.RegisterUserUseCase;
-import com.alexguedes.iam.identity.domain.port.PasswordHasher;
-import com.alexguedes.iam.identity.domain.port.UserIdGenerator;
-import com.alexguedes.iam.identity.domain.port.UserRepository;
+import com.alexguedes.iam.identity.application.usecase.RegisterUserUseCase;
+import com.alexguedes.iam.identity.application.port.security.PasswordHasher;
+import com.alexguedes.iam.identity.application.port.identity.UserIdGenerator;
+import com.alexguedes.iam.identity.application.port.out.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

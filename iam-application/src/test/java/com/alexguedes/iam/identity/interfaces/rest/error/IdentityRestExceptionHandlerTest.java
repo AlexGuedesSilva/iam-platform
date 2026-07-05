@@ -1,11 +1,9 @@
 package com.alexguedes.iam.identity.interfaces.rest.error;
 
-import com.alexguedes.iam.identity.application.RegisterUserCommand;
-import com.alexguedes.iam.identity.application.RegisterUserUseCase;
+import com.alexguedes.iam.identity.application.usecase.RegisterUserCommand;
+import com.alexguedes.iam.identity.application.usecase.RegisterUserUseCase;
 import com.alexguedes.iam.identity.domain.exception.InvalidEmailException;
 import com.alexguedes.iam.identity.domain.exception.UserAlreadyExistsException;
-import com.alexguedes.iam.identity.domain.valueobject.Email;
-import com.alexguedes.iam.identity.domain.valueobject.UserId;
 import com.alexguedes.iam.identity.interfaces.rest.registration.UserRegistrationController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;

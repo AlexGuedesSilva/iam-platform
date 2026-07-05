@@ -1,4 +1,4 @@
-package com.alexguedes.iam.identity.application;
+package com.alexguedes.iam.identity.application.usecase;
 
 import com.alexguedes.iam.identity.domain.valueobject.Email;
 import com.alexguedes.iam.identity.domain.valueobject.UserId;

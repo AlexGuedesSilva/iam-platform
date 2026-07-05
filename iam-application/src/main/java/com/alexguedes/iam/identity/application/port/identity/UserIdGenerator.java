@@ -1,4 +1,4 @@
-package com.alexguedes.iam.identity.domain.port;
+package com.alexguedes.iam.identity.application.port.identity;
 
 import com.alexguedes.iam.identity.domain.valueobject.UserId;
 

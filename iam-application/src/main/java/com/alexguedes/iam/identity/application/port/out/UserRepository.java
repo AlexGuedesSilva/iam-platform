@@ -1,4 +1,4 @@
-package com.alexguedes.iam.identity.domain.port;
+package com.alexguedes.iam.identity.application.port.out;
 
 import com.alexguedes.iam.identity.domain.model.User;
 import com.alexguedes.iam.identity.domain.valueobject.Email;

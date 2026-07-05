@@ -6,10 +6,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.alexguedes.iam.identity.application.RegisterUserCommand;
-import com.alexguedes.iam.identity.application.RegisterUserResult;
-import com.alexguedes.iam.identity.application.RegisterUserUseCase;
-import com.alexguedes.iam.identity.domain.exception.UserAlreadyExistsException;
+import com.alexguedes.iam.identity.application.usecase.RegisterUserCommand;
+import com.alexguedes.iam.identity.application.usecase.RegisterUserResult;
+import com.alexguedes.iam.identity.application.usecase.RegisterUserUseCase;
 import com.alexguedes.iam.identity.domain.model.UserStatus;
 import com.alexguedes.iam.identity.domain.valueobject.Email;
 import com.alexguedes.iam.identity.domain.valueobject.UserId;
@@ -17,7 +16,6 @@ import com.alexguedes.iam.identity.domain.valueobject.UserId;
 import java.time.Instant;
 import java.util.UUID;
 
-import com.alexguedes.iam.identity.interfaces.rest.error.IdentityRestExceptionHandler;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

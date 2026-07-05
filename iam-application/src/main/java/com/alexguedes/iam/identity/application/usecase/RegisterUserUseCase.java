@@ -1,12 +1,12 @@
-package com.alexguedes.iam.identity.application;
+package com.alexguedes.iam.identity.application.usecase;
 
 import com.alexguedes.iam.identity.domain.valueobject.Email;
 import com.alexguedes.iam.identity.domain.valueobject.PasswordHash;
-import com.alexguedes.iam.identity.domain.port.PasswordHasher;
+import com.alexguedes.iam.identity.application.port.security.PasswordHasher;
 import com.alexguedes.iam.identity.domain.model.User;
 import com.alexguedes.iam.identity.domain.valueobject.UserId;
-import com.alexguedes.iam.identity.domain.port.UserIdGenerator;
-import com.alexguedes.iam.identity.domain.port.UserRepository;
+import com.alexguedes.iam.identity.application.port.identity.UserIdGenerator;
+import com.alexguedes.iam.identity.application.port.out.UserRepository;
 import com.alexguedes.iam.identity.domain.exception.UserAlreadyExistsException;
 
 import java.util.Objects;

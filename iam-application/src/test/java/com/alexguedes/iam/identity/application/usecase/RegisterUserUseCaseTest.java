@@ -1,4 +1,4 @@
-package com.alexguedes.iam.identity.application;
+package com.alexguedes.iam.identity.application.usecase;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -6,9 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.alexguedes.iam.identity.application.usecase.RegisterUserCommand;
-import com.alexguedes.iam.identity.application.usecase.RegisterUserResult;
-import com.alexguedes.iam.identity.application.usecase.RegisterUserUseCase;
 import com.alexguedes.iam.identity.domain.valueobject.Email;
 import com.alexguedes.iam.identity.domain.valueobject.PasswordHash;
 import com.alexguedes.iam.identity.application.port.security.PasswordHasher;
@@ -55,6 +52,7 @@ class RegisterUserUseCaseTest {
         assertNotNull(userRepository.savedUser);
         assertEquals(GENERATED_USER_ID, userRepository.savedUser.id());
         assertEquals(UserStatus.ACTIVE, userRepository.savedUser.status());
+        assertEquals(VALID_NAME, result.name());
         assertEquals(new Email(VALID_EMAIL), userRepository.savedUser.email());
         assertEquals(new PasswordHash(HASHED_PASSWORD), userRepository.savedUser.passwordHash());
         assertNotNull(result.userId());
@@ -160,7 +158,8 @@ class RegisterUserUseCaseTest {
 
         @Override
         public boolean matches(String rawPassword, PasswordHash passwordHash) {
-            return passwordHash.value().equals(HASHED_PASSWORD);
+            return HASHED_PASSWORD.equals(rawPassword)
+                    && HASHED_PASSWORD.equals(passwordHash.value());
         }
     }
 

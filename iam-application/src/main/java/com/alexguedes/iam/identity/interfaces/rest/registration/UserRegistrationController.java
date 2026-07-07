@@ -1,7 +1,7 @@
 package com.alexguedes.iam.identity.interfaces.rest.registration;
 
-import com.alexguedes.iam.identity.application.usecase.RegisterUserResult;
-import com.alexguedes.iam.identity.application.usecase.RegisterUserUseCase;
+import com.alexguedes.iam.identity.application.usecase.registration.RegisterUserResult;
+import com.alexguedes.iam.identity.application.usecase.registration.RegisterUserUseCase;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

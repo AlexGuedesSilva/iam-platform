@@ -1,6 +1,6 @@
 package com.alexguedes.iam.identity.interfaces.rest.registration;
 
-import com.alexguedes.iam.identity.application.usecase.RegisterUserCommand;
+import com.alexguedes.iam.identity.application.usecase.registration.RegisterUserCommand;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

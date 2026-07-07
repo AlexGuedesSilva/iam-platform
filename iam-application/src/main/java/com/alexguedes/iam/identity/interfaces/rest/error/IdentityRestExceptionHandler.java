@@ -1,5 +1,6 @@
 package com.alexguedes.iam.identity.interfaces.rest.error;
 
+import com.alexguedes.iam.identity.application.exception.AuthenticationFailedException;
 import com.alexguedes.iam.identity.domain.exception.InvalidEmailException;
 import com.alexguedes.iam.identity.domain.exception.InvalidPasswordException;
 import com.alexguedes.iam.identity.domain.exception.InvalidUserNameException;
@@ -21,6 +22,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class IdentityRestExceptionHandler {
 
     private static final String INTERNAL_SERVER_ERROR_MESSAGE = "Internal server error";
+
+    @ExceptionHandler(AuthenticationFailedException.class)
+    public ResponseEntity<ErrorResponse> handleAuthenticationFailed(
+            AuthenticationFailedException exception,
+            HttpServletRequest request
+    ) {
+        return buildResponse(HttpStatus.UNAUTHORIZED, exception.getMessage(), request);
+    }
 
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<ErrorResponse> handleUserAlreadyExists(

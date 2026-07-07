@@ -1,4 +1,4 @@
-package com.alexguedes.iam.identity.application.usecase;
+package com.alexguedes.iam.identity.application.usecase.authentication;
 
 import com.alexguedes.iam.identity.application.exception.AuthenticationFailedException;
 import com.alexguedes.iam.identity.application.port.out.UserRepository;

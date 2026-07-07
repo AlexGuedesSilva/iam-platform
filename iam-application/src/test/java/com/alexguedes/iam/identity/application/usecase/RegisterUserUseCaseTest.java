@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.alexguedes.iam.identity.application.usecase.registration.RegisterUserCommand;
+import com.alexguedes.iam.identity.application.usecase.registration.RegisterUserResult;
+import com.alexguedes.iam.identity.application.usecase.registration.RegisterUserUseCase;
 import com.alexguedes.iam.identity.domain.valueobject.Email;
 import com.alexguedes.iam.identity.domain.valueobject.PasswordHash;
 import com.alexguedes.iam.identity.application.port.security.PasswordHasher;

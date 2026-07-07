@@ -1,7 +1,7 @@
 package com.alexguedes.iam.identity.interfaces.rest.error;
 
-import com.alexguedes.iam.identity.application.usecase.RegisterUserCommand;
-import com.alexguedes.iam.identity.application.usecase.RegisterUserUseCase;
+import com.alexguedes.iam.identity.application.usecase.registration.RegisterUserCommand;
+import com.alexguedes.iam.identity.application.usecase.registration.RegisterUserUseCase;
 import com.alexguedes.iam.identity.domain.exception.InvalidEmailException;
 import com.alexguedes.iam.identity.domain.exception.UserAlreadyExistsException;
 import com.alexguedes.iam.identity.interfaces.rest.registration.UserRegistrationController;

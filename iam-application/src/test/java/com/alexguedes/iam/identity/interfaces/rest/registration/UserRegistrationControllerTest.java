@@ -6,9 +6,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.alexguedes.iam.identity.application.usecase.RegisterUserCommand;
-import com.alexguedes.iam.identity.application.usecase.RegisterUserResult;
-import com.alexguedes.iam.identity.application.usecase.RegisterUserUseCase;
+import com.alexguedes.iam.identity.application.usecase.registration.RegisterUserCommand;
+import com.alexguedes.iam.identity.application.usecase.registration.RegisterUserResult;
+import com.alexguedes.iam.identity.application.usecase.registration.RegisterUserUseCase;
 import com.alexguedes.iam.identity.domain.model.UserStatus;
 import com.alexguedes.iam.identity.domain.valueobject.Email;
 import com.alexguedes.iam.identity.domain.valueobject.UserId;

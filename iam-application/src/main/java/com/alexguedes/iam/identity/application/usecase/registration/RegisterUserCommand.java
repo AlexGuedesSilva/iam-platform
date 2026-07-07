@@ -1,4 +1,4 @@
-package com.alexguedes.iam.identity.application.usecase;
+package com.alexguedes.iam.identity.application.usecase.registration;
 
 import com.alexguedes.iam.identity.domain.exception.InvalidEmailException;
 import com.alexguedes.iam.identity.domain.exception.InvalidPasswordException;

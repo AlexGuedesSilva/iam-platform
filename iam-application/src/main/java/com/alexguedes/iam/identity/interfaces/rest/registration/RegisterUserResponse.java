@@ -1,6 +1,6 @@
 package com.alexguedes.iam.identity.interfaces.rest.registration;
 
-import com.alexguedes.iam.identity.application.usecase.RegisterUserResult;
+import com.alexguedes.iam.identity.application.usecase.registration.RegisterUserResult;
 import java.time.Instant;
 
 public record RegisterUserResponse(

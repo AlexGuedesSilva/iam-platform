@@ -1,9 +1,10 @@
 package com.alexguedes.iam.identity.infrastructure.config;
 
-import com.alexguedes.iam.identity.application.usecase.RegisterUserUseCase;
 import com.alexguedes.iam.identity.application.port.security.PasswordHasher;
 import com.alexguedes.iam.identity.application.port.identity.UserIdGenerator;
 import com.alexguedes.iam.identity.application.port.out.UserRepository;
+import com.alexguedes.iam.identity.application.usecase.LoginUserUseCase;
+import com.alexguedes.iam.identity.application.usecase.RegisterUserUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,5 +18,13 @@ public class IdentityUseCaseConfiguration {
             UserIdGenerator userIdGenerator
     ) {
         return new RegisterUserUseCase(userRepository, passwordHasher, userIdGenerator);
+    }
+
+    @Bean
+    LoginUserUseCase loginUserUseCase(
+            UserRepository userRepository,
+            PasswordHasher passwordHasher
+    ) {
+        return new LoginUserUseCase(userRepository, passwordHasher);
     }
 }

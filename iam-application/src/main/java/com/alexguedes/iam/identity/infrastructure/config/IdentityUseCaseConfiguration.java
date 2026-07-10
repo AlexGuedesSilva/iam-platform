@@ -1,5 +1,6 @@
 package com.alexguedes.iam.identity.infrastructure.config;
 
+import com.alexguedes.iam.identity.application.port.security.AccessTokenIssuer;
 import com.alexguedes.iam.identity.application.port.security.PasswordHasher;
 import com.alexguedes.iam.identity.application.port.identity.UserIdGenerator;
 import com.alexguedes.iam.identity.application.port.out.UserRepository;
@@ -23,8 +24,9 @@ public class IdentityUseCaseConfiguration {
     @Bean
     LoginUserUseCase loginUserUseCase(
             UserRepository userRepository,
-            PasswordHasher passwordHasher
+            PasswordHasher passwordHasher,
+            AccessTokenIssuer accessTokenIssuer
     ) {
-        return new LoginUserUseCase(userRepository, passwordHasher);
+        return new LoginUserUseCase(userRepository, passwordHasher, accessTokenIssuer);
     }
 }

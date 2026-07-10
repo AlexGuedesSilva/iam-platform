@@ -50,7 +50,10 @@ class LoginControllerTest {
                 "Alex Guedes",
                 new Email("alex@example.com"),
                 UserStatus.ACTIVE,
-                Instant.parse("2026-07-07T12:00:00Z")
+                Instant.parse("2026-07-07T12:00:00Z"),
+                "signed-access-token",
+                "Bearer",
+                Instant.parse("2026-07-07T12:15:00Z")
         );
 
         when(loginUserUseCase.execute(any(LoginUserCommand.class)))
@@ -68,6 +71,9 @@ class LoginControllerTest {
                 .andExpect(jsonPath("$.userId").value(USER_ID.toString()))
                 .andExpect(jsonPath("$.email").value("alex@example.com"))
                 .andExpect(jsonPath("$.status").value("ACTIVE"))
+                .andExpect(jsonPath("$.accessToken").value("signed-access-token"))
+                .andExpect(jsonPath("$.tokenType").value("Bearer"))
+                .andExpect(jsonPath("$.expiresAt").value("2026-07-07T12:15:00Z"))
                 .andExpect(jsonPath("$.passwordHash").doesNotExist())
                 .andExpect(jsonPath("$.password").doesNotExist());
 

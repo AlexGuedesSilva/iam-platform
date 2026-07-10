@@ -5,14 +5,20 @@ import com.alexguedes.iam.identity.application.usecase.authentication.LoginUserR
 public record LoginResponse(
         String userId,
         String email,
-        String status
+        String status,
+        String accessToken,
+        String tokenType,
+        String expiresAt
 ) {
 
     static LoginResponse from(LoginUserResult result) {
         return new LoginResponse(
                 result.userId().value().toString(),
                 result.email().value(),
-                result.status().name()
+                result.status().name(),
+                result.accessToken(),
+                result.tokenType(),
+                result.expiresAt().toString()
         );
     }
 }
